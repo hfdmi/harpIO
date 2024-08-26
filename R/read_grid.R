@@ -160,7 +160,8 @@ read_grid <- function(
     transformation_opts = transformation_opts,
     format_opts         = file_format_opts,
     param_defs          = param_defs,
-    show_progress       = show_progress
+    show_progress       = show_progress,
+    invert_data         = invert_data
   )
 
   if (is.element("transformation_opts", names(attributes(gridded_data)))) {

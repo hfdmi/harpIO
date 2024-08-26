@@ -107,6 +107,8 @@ read_grid <- function(
   transformation      <- match.arg(transformation)
   transformation_opts <- check_opts(transformation, transformation_opts)
 
+  message("Returned file format: ", file_format)
+  
   file_format <- check_for_na(file_format)
 
   if (is.null(file_format)) {
@@ -129,7 +131,7 @@ read_grid <- function(
     transformation_opts <- interpolate_opts(stations = harpCore::station_list)
   }
 
-  read_func <- try(get(paste0("read_", file_format)), silent = TRUE)
+  read_func <- try(get(paste0("read_", file_format)), silent = FALSE)
   if (inherits(read_func, "try-error")) {
     stop(
       "Cannot find function 'read_", file_format, "' to read ", file_format, " files.",
@@ -147,6 +149,7 @@ read_grid <- function(
   }
 
   message("Reading ", file_name)
+  message("read_grid: invert_data = ", invert_data)
 
   gridded_data <- read_func(
     file_name           = file_name,

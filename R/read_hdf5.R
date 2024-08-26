@@ -46,6 +46,7 @@ read_hdf5 <- function(
       transformation_opts = list(),
       format_opts         = hdf5_opts(),
       show_progress       = FALSE,
+      invert_data         = FALSE,
       ...) {
 
   if (!requireNamespace("hdf5r", quietly = TRUE)) {
@@ -59,6 +60,11 @@ read_hdf5 <- function(
   if (inherits(parameter, "harp_parameter")) {
     parameter <- list(parameter)
   }
+
+  message("read_hdf5: invert_data=", invert_data)
+  print("read_hdf5: format_opts")
+  print(format_opts)
+  
   parameter      <- lapply(parameter, parse_harp_parameter)
   param_info     <- lapply(parameter, get_hdf5_param_info)
   unknown_params <- which(sapply(param_info, function(x) x$quantity == "unknown" ))
@@ -288,12 +294,14 @@ Hdec <- function(file_name, data_path="dataset1/data1/data", meta=TRUE, invert_d
   #       if the path is not defined, we should LOOK FOR IT via the parameter? Or in read_hdf5()
   #### my_data <- t(hf[[data_path]]$read())
 
-  print("invert_data")
-  print(invert_data)
+  message("Hdec: invert_data=", invert_data)
+
   if (invert_data){
+          print("invert_data=truee")
 	  my_data <- t(hf[[data_path]]$read())
 	  my_data <- my_data[, ncol(my_data):1]  # transpose and put upside-down
   } else {
+          print("invert_data=falsee")
 	  my_data <- hf[[data_path]]$read()
   }
   # ODIM-specific?

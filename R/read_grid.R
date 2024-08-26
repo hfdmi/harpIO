@@ -89,6 +89,7 @@ read_grid <- function(
   data_frame          = FALSE,
   readable_times      = TRUE,
   spread_members      = FALSE,
+  invert_data         = FALSE,
   ...
 ) {
 
